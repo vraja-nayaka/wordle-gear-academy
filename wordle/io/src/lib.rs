@@ -14,16 +14,13 @@ impl Metadata for WordleMetadata {
     type State = ();
 }
 
+#[derive(Debug, Clone, Encode, Decode, TypeInfo)]
 pub enum Action {
-    StartGame {
-        user: ActorId,
-    },
-    CheckWord {
-        user: ActorId,
-        word: String,
-    }
+    StartGame { user: ActorId },
+    CheckWord { user: ActorId, word: String },
 }
 
+#[derive(Debug, Clone, Encode, Decode, TypeInfo)]
 pub enum Event {
     GameStarted {
         user: ActorId,
