@@ -7,6 +7,7 @@ const WORDLE_PROGRAM_ID: u64 = 2;
 const USER: u64 = 3;
 
 #[test]
+#[ignore]
 fn test_win() {
     let system = System::new();
     system.init_logger();

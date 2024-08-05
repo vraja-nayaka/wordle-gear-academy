@@ -19,7 +19,11 @@ extern "C" fn init() {
 extern "C" fn handle() {
     let game_session_action: GameSessionAction =
         msg::load().expect("Unable to decode `GameSessionAction`");
-    let game_session = unsafe { GAME_SESSION_STATE.as_mut().expect("Game is not initialized") };
+    let game_session = unsafe {
+        GAME_SESSION_STATE
+            .as_mut()
+            .expect("Game is not initialized")
+    };
     match game_session_action {
         GameSessionAction::StartGame => {
             let user = msg::source();
@@ -125,7 +129,11 @@ extern "C" fn handle() {
 extern "C" fn handle_reply() {
     let reply_to = msg::reply_to().expect("Failed to query reply_to data");
     let wordle_event: WordleEvent = msg::load().expect("Unable to decode `WordleEvent`");
-    let game_session = unsafe { GAME_SESSION_STATE.as_mut().expect("Game is not initialized") };
+    let game_session = unsafe {
+        GAME_SESSION_STATE
+            .as_mut()
+            .expect("Game is not initialized")
+    };
     let user = wordle_event.get_user();
     if let Some(session_info) = game_session.sessions.get_mut(user) {
         if reply_to == session_info.send_to_wordle_msg_id && session_info.is_wait_reply_status() {
@@ -137,7 +145,11 @@ extern "C" fn handle_reply() {
 
 #[no_mangle]
 extern "C" fn state() {
-    let game_session = unsafe { GAME_SESSION_STATE.as_ref().expect("Game is not initialized") };
+    let game_session = unsafe {
+        GAME_SESSION_STATE
+            .as_ref()
+            .expect("Game is not initialized")
+    };
     msg::reply::<GameSessionState>(game_session.into(), 0)
         .expect("failed to encode or reply from `state()`");
 }
